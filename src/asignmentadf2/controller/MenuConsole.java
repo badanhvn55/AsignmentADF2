@@ -5,6 +5,7 @@
  */
 package AsignmentADF2.controller;
 
+import asignmentadf2.FileHandle;
 import java.util.Scanner;
 
 import asignmentadf2.controller.StudentController;
@@ -12,6 +13,7 @@ import asignmentadf2.controller.StudentController;
 public class MenuConsole {
     
     StudentController studentController=new StudentController();
+    FileHandle fileHandle=new FileHandle();
 
     public void menu() {
         while (true) {
@@ -57,11 +59,11 @@ public class MenuConsole {
                         break;
                     case 5:
                         //export student
-                        studentController.exportListStudent();
+                        fileHandle.exportListStudent();
                         break;
                     case 6:
                         //Import student
-                        studentController.importListStudent();
+                        fileHandle.importListStudent();
                         break;
                     default:
                         System.out.println("Please enter number from 1 to 7");

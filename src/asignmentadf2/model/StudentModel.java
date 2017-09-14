@@ -30,6 +30,7 @@ public class StudentModel {
                 student.setId((rs.getInt("id")));
                 student.setName(rs.getString("name"));
                 student.setEmail(rs.getString("email"));
+                student.setPhone(rs.getString("phone"));
                 student.setClassName(rs.getString("class_name"));
                 student.setRollNumber(rs.getString("roll_number"));
                 listStudent.add(student);
@@ -52,6 +53,7 @@ public class StudentModel {
                  student.setId(rs.getInt("id"));
                  student.setName(rs.getString("name"));
                  student.setEmail(rs.getString("email"));
+                 student.setPhone(rs.getString("phone"));
                  student.setClassName(rs.getString("class_name"));
                  student.setRollNumber(rs.getString("roll_number"));
                  return student;
@@ -67,13 +69,14 @@ public class StudentModel {
         try {
             
             Connection cnn=DAO.getConnection();
-            PreparedStatement preStt=cnn.prepareStatement("insert into student (name, email, class_name, roll_number) values(?, ?, ?, ?)");
+            PreparedStatement preStt=cnn.prepareStatement("insert into student (name, email, phone, class_name, roll_number) values(?, ?, ?, ?, ?)");
             
 
             preStt.setString(1, student.getName());
             preStt.setString(2, student.getEmail());
-            preStt.setString(3, student.getClassName());
-            preStt.setString(4, student.getRollNumber());
+            preStt.setString(3, student.getPhone());
+            preStt.setString(4, student.getClassName());
+            preStt.setString(5, student.getRollNumber());
             System.out.println("----------SQL Query----------");
             System.out.println(preStt.toString());
             System.out.println("----------End SQL Query-----------");
@@ -87,13 +90,14 @@ public class StudentModel {
     public void update(Student student){
         try {
             Connection cnn=DAO.getConnection();
-            String sqlQuery="update student set name=?, email=?, class_name=?, roll_number=? where id=?";
+            String sqlQuery="update student set name=?, email=?, phone=?, class_name=?, roll_number=? where id=?";
             PreparedStatement preStt=cnn.prepareStatement(sqlQuery);
             preStt.setString(1, student.getName());
             preStt.setString(2, student.getEmail());
-            preStt.setString(3, student.getClassName());
-            preStt.setString(4, student.getRollNumber());
-            preStt.setInt(5, student.getId());
+            preStt.setString(3, student.getName());
+            preStt.setString(4, student.getClassName());
+            preStt.setString(5, student.getRollNumber());
+            preStt.setInt(6, student.getId());
             
             int rowsUpdated=preStt.executeUpdate();
             if(rowsUpdated>0){

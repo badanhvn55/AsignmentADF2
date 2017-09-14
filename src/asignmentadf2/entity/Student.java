@@ -13,6 +13,7 @@ public class Student {
     private int id;
     private String name;
     private String email;
+    private String phone;
     private String className;
     private String rollNumber;
 
@@ -56,6 +57,15 @@ public class Student {
     public void setRollNumber(String rollNumber) {
         this.rollNumber = rollNumber;
     }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+    
     
     
 }

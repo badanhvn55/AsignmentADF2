@@ -7,12 +7,7 @@ package asignmentadf2.controller;
 
 import asignmentadf2.entity.Student;
 import asignmentadf2.model.StudentModel;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import asignmentadf2.validate.Validator;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -38,6 +33,7 @@ public class StudentController {
                 System.out.println("id: " + listStu.getId());
                 System.out.println("name: " + listStu.getName());
                 System.out.println("email: " + listStu.getEmail());
+                System.out.println("email: " + listStu.getPhone());
                 System.out.println("class name: " + listStu.getClassName());
                 System.out.println("roll number: " + listStu.getRollNumber());
                 System.out.println("");
@@ -49,18 +45,35 @@ public class StudentController {
     }
 
     public void addStudent() {
+        Validator v = new Validator();
         System.out.println("***Please enter student information***");
+        String name, email, phone, className, rollNumber;
         System.out.println("Please enter name: ");
-        String name = scan.nextLine();
+        name = scan.nextLine();
         System.out.println("Please enter email: ");
-        String email = scan.nextLine();
+        while (true) {
+            email = scan.nextLine();
+            if (v.isEmailValid(email)) {
+                break;
+            }
+        }
+
+        System.out.println("Please enter phone: ");
+        while (true) {
+            phone = scan.nextLine();
+            if (v.isPhoneValid(phone)) {
+                break;
+            }
+        }
         System.out.println("Please enter class name: ");
-        String className = scan.nextLine();
+        className = scan.nextLine();
         System.out.println("Please enter rollNumber: ");
-        String rollNumber = scan.nextLine();
+
+        rollNumber = scan.nextLine();
 
         student.setName(name);
         student.setEmail(email);
+        student.setPhone(phone);
         student.setClassName(className);
         student.setRollNumber(rollNumber);
         studentModel.insert(student);
@@ -77,38 +90,50 @@ public class StudentController {
             System.out.println("Please enter ID is a number " + e.getMessage());
 
         }
-        
-        Student student=studentModel.getById(id);
+
+        Student student = studentModel.getById(id);
         if (student != null) {
             System.out.println("---------Information student editing--------");
             System.out.println("id: " + student.getId());
             System.out.println("name: " + student.getName());
             System.out.println("email: " + student.getEmail());
+            System.out.println("phone: " + student.getPhone());
             System.out.println("class name: " + student.getClassName());
             System.out.println("roll number: " + student.getRollNumber());
             System.out.println("----------------------------------------");
+            String name, email, phone, className, rollNumber;
             System.out.println("Rewrite your name: ");
-            String name = scan.nextLine();
+            name = scan.nextLine();
             System.out.println("Rewrite your email: ");
-            String email = scan.nextLine();
+            Validator v = new Validator();
+            while (true) {
+            email = scan.nextLine();
+            if (v.isEmailValid(email)) {
+                break;
+            }
+        }
+            System.out.println("Rewrite your phone: ");
+            while (true) {
+            phone = scan.nextLine();
+            if (v.isPhoneValid(phone)) {
+                break;
+            }
+        }
             System.out.println("Rewrite your class name: ");
-            String className = scan.nextLine();
+            className = scan.nextLine();
             System.out.println("Rewrite your roll number: ");
-            String rollNumber = scan.nextLine();
-            
+            rollNumber = scan.nextLine();
+
             student.setName(name);
             student.setEmail(email);
+            student.setPhone(phone);
             student.setClassName(className);
             student.setRollNumber(rollNumber);
             studentModel.update(student);
-        }else{
+        } else {
             System.out.println("No data id number. Please choose a other number!");
         }
-        
-        
-        
-        
-        
+
     }
 
     public void deleteStudent() {
@@ -121,9 +146,9 @@ public class StudentController {
         } catch (NumberFormatException e) {
             System.out.println("Please enter ID is a number " + e.getMessage());
         }
-        
-        Student student=studentModel.getById(id);
-        if (student !=null) {
+
+        Student student = studentModel.getById(id);
+        if (student != null) {
             studentModel.delete(id);
         } else {
             System.out.println("No data id number. Please choose a other number!");
@@ -131,60 +156,5 @@ public class StudentController {
 
     }
 
-    public void exportListStudent() {
-        listStudent = studentModel.getListStudent();
-
-        FileWriter fw = null;
-        BufferedWriter bw = null;
-
-        try {
-            fw = new FileWriter("listStudent.txt");
-            bw = new BufferedWriter(fw);
-
-            for (Student student1 : listStudent) {
-                bw.write("ID: " + student1.getId());
-                bw.newLine();
-                bw.write("Name: " + student1.getName());
-                bw.newLine();
-                bw.write("Email: " + student1.getEmail());
-                bw.newLine();
-                bw.write("Class name: " + student1.getClassName());
-                bw.newLine();
-                bw.write("Roll number: " + student1.getRollNumber());
-                bw.newLine();
-                bw.newLine();
-            }
-            System.out.println("Export list student success!");
-        } catch (IOException e) {
-            System.err.println(e);
-        } finally {
-            try {
-                bw.close();
-                fw.close();
-            } catch (IOException e) {
-                System.err.println(e);
-            }
-
-        }
-
-    }
-
-    public void importListStudent() {
-        try {
-            FileReader fr = new FileReader("listStudent.txt");
-            BufferedReader br = new BufferedReader(fr);
-            String str;
-            while ((str = br.readLine()) != null) {
-                System.out.println(str);
-            }
-            System.out.println("Import list student success!");
-        } catch (FileNotFoundException e) {
-            System.err.println(e);
-        } catch (IOException ex) {
-            System.err.println(ex);
-        }
-    }
-
-    
 
 }
