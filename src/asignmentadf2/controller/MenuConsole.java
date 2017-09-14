@@ -5,7 +5,7 @@
  */
 package AsignmentADF2.controller;
 
-import asignmentadf2.FileHandle;
+import asignmentadf2.FileHandle.FileHandle;
 import java.util.Scanner;
 
 import asignmentadf2.controller.StudentController;

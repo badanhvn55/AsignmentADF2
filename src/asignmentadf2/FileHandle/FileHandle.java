@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package asignmentadf2;
+package asignmentadf2.FileHandle;
 
 import asignmentadf2.entity.Student;
 import asignmentadf2.model.StudentModel;
